@@ -1,0 +1,236 @@
+<html>
+    
+    <body>
+        <script>
+
+            var turn;
+            var state=0;
+            var arr=[]
+            var a,b,z,d,e,f,g,h,i;
+            var res
+            var bbb=[]
+  var no=[];  
+  var n=-1
+/**/
+function reset()
+
+{
+    var re=new XMLHttpRequest();
+    re.open("GET","http:127.0.0.1:5000/reset")
+    re.send();
+}
+function dis(x)
+{
+document.getElementById(x).disabled=true;
+}
+
+
+
+            function calculate(x,state)
+
+{ 
+    console.log("calculate"+state)
+    if (state==0)
+                {
+
+                document.getElementById(x).innerHTML="O";
+                
+                }
+                else
+                {
+                    document.getElementById(x).innerHTML="X"
+                }
+
+                if (state==1){
+
+                if (x=='a')
+                {
+                    a=5;
+                }
+                if (x=='b')
+                {
+                     b=5;
+                    
+                }
+                if (x=='z')
+                {
+                    z=5;
+                    
+                }
+                if (x=='d')
+                {
+                    d=5;
+                }
+                if (x=='e')
+                {
+                    e=5;
+                }
+                if (x=='f')
+                {
+                    f=5;
+                }
+                if (x=='g')
+                {
+                    g=5;
+                }
+                if (x=='h')
+                {
+                    h=5;
+                }
+                if (x=='i')
+                {
+                    i=5;
+                }
+            }
+
+            if (state==0){
+
+if (x=='a')
+{
+    a=-5;
+}
+if (x=='b')
+{
+     b=-5;
+    
+}
+if (x=='z')
+{
+    z=-5;
+    
+}
+if (x=='d')
+{
+    d=-5;
+}
+if (x=='e')
+{
+    e=-5;
+}
+if (x=='f')
+{
+    f=-5;
+}
+if (x=='g')
+{
+    g=-5;
+}
+if (x=='h')
+{
+    h=-5;
+}
+if (x=='i')
+{
+    i=-5;
+}
+}
+
+
+               
+               
+
+               if(a+e+i==15||z+e+g==15||a+b+z==15||d+e+f==15||g+h+i==15||a+d+g==15||b+e+h==15||z+f+i==15)
+               {
+                   alert("X WINS")
+                }
+               if(a+e+i==-15||z+e+g==-15||a+b+z==-15||d+e+f==-15||g+h+i==-15||a+d+g==-15||b+e+h==-15||z+f+i==-15)
+               {alert("O WINS")}
+               var tie=a+b+z+d+e+f+g+h+i
+               if(!Number.isNaN(tie))
+               {
+                   alert('DRAW')
+               }
+             
+               
+
+            
+            }
+            /*send  store data*/
+function c(x)
+            {if(state!=turn)
+            {
+                 if (no.indexOf(x)==-1)
+              { 
+                n=n+1
+                no[n]=x
+                console.log(no)
+                state=(state+1)%2
+                turn=state
+                console.log('c'+state)
+/*xhr request*/
+
+
+var r=new XMLHttpRequest();
+var token=document.getElementById("to").value;
+var url="http://127.0.0.1:5000?token="
+url=url+token
+var sss="&static="
+var st=state;
+st=sss+st
+url=url+st
+var ids="&ids="+x
+url=url+ids
+
+var ids="a";
+r.open("GET",url);
+r.send();
+
+calculate(x,state)       }   
+  }}
+
+            /*to retrieve data*/
+
+setInterval(function data()
+{
+    var k=new XMLHttpRequest();
+    k.open("GET","http://127.0.0.1:5000/data") 
+    k.onreadystatechange=function(){
+
+if (this.readyState===4&&this.status===200)
+{
+   var res=this.responseText;
+    
+    arr=res
+    x=arr[0]
+    no.push(x)
+    state=parseInt(arr[2])
+    
+    calculate(x,parseInt(arr[2]))
+}
+
+}
+k.send()
+
+},1000);
+/*to process*/
+
+
+
+
+            
+  window.onload=reset();         
+        </script>
+        <style>
+            div {
+  
+ height: 30px;
+ width: 30px;
+
+ 
+}
+            
+           
+            </style>
+        <button onclick="c('a')" ><div id="a">&nbsp;</div></button>&nbsp;<button onclick="c('b')"><div id="b">&nbsp;</div></button>&nbsp;<button onclick="c('z')"><div id="z">&nbsp;</div></button><br><br>
+        <button onclick="c('d')"><div id="d">&nbsp;</div></button>&nbsp;<button onclick="c('e')"><div id="e">&nbsp;</div></button>&nbsp;<button onclick="c('f')"><div id="f">&nbsp;</div></button><br><br>
+        <button onclick="c('g')"><div id="g">&nbsp;</div></button>&nbsp;<button onclick="c('h')"><div id="h">&nbsp;</div></button>&nbsp;<button onclick="c('i')"><div id="i">&nbsp;</div></button><br><br><br>
+
+        <br>
+        <br>
+        
+        
+        <input type="text" id="to" hidden=true;>
+        
+        
+    </body>
+</html>
